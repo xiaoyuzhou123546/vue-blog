@@ -11,7 +11,6 @@ api = Api(app)
 
 
 app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()+"/app/templates/images"  # 文件储存地址
-app.config['UPLOADED_PHOTOS_URL'] = "http://xiaoyuzhou.club:8081/"
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)  # 文件大小限制，默认为16MB
@@ -80,7 +79,8 @@ class UploadFile(Resource):
 		suffix = os.path.splitext(request.files['photo'].filename)[1]
 		filename = generate_random_str() + suffix
 		photos.save(request.files['photo'], name=filename)
-		file_url = photos.url(filename)
+		#file_url = photos.url(filename)
+		file_url = "http://xiaoyuzhou.club:8081/_uploads/photos/"+filename
 		return dict(result=file_url)
 
 api.add_resource(UserList,'/')
